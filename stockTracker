@@ -1,0 +1,81 @@
+import random # To generate random index
+
+
+
+''' Function to calculate share price per quarter '''
+def calculate_quarter(share_price):
+    shares_index = random.randint(1,100)
+    previous_losses = 0
+
+    
+    # Calculate share drop/increase
+    if 1 <= shares_index <= 25:
+        share_drop = random.uniform(25,75)
+        share_price = share_price * (1 - (share_drop / 100))
+        previous_losses += 1
+    
+    elif 26 <= shares_index <= 50:
+        share_drop = random.uniform(1,25)
+        share_price = share_price * (1 - (share_drop / 100))
+        previous_losses += 1
+    
+    elif 51 <= shares_index <= 100:
+        share_increase = random.uniform(15,35)
+        if previous_losses == 0:
+            share_price = share_price * (1 + (share_increase / 100))
+        else:
+            
+            print(f"Share price is: {share_price}")
+        return share_price
+
+# Test
+# calculate_quarter(6)
+
+def invest():
+
+    skyhook_price = 2.9
+    tartan_price = 2.7
+    fishnet_price = 1.5
+    funds = 150
+    
+    print(f'''
+          Welcome to the stock investment program.
+          
+          Current Prices:
+          
+          Skyhooks: 2.9
+          Tartan: 2.7
+          Fishnet: 1.5
+          
+          You have {funds}.
+          
+          Please divide your funds eg. 50, 50, 50''')
+    
+    # Ask user to divide shares
+    skyhook_split = input("Skyhooks: ")
+    skyhook_invested = skyhook_split / skyhook_price
+    print(f"You have invested {skyhook_invested}, you have " + funds - skyhook_invested + "left." )
+    tartan_split = input("Tartan: ")
+    fishnet_split = input("Fishnet: ")
+    
+    
+    
+    # Loops through year range
+    for year in range(1,4):
+        print(f"Year: {year}")
+        # Loops through quarter
+        for quarter in range(1,5):
+            print(f"Quarter: {quarter}")
+            print_price = calculate_quarter(6)
+            print(print_price)
+            
+             
+        # Asks if the user would like to continue    
+        if year == 3:
+            continue_or = input("Do you want to continue?")
+            if continue_or == "Y":
+                invest()
+            else:
+                SystemExit()
+    
+invest()
