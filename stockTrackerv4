@@ -120,4 +120,11 @@ while True:
             pass
 
 #50
-# invested_funds = 
+# invested_skyhook = invest / skyhook_price
+# pass price into calculater function
+# return new price
+# stores new price, name
+# at the end of each year, latest invested is shown
+# as well as how mich each share has gone up,
+# percentage of increase, and the option to reinvest
+# whatever is in the pot. 
