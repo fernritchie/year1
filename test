@@ -1,14 +1,111 @@
-price = 1.50
+import random
+
+
+class Stock:
+	def __init__(self, name, price, funds):
+		self.name = name
+		self.price = price
+		self.funds = funds
+		self.split_history = []
+		self.invested_value = funds / price
+		self.price_history = [price]
+		
+	quarter = 0
+
+	def simulate(self):
+		index = random.randint(0, 100)
+		
+		
+		if index <= 25:
+			# display initial investment value
+			self.invested_value -= self.invested_value * 0.25
+			print(f"{self.name} dropped: " + str(self.invested_value))
+			self.price -= self.price * 0.25
+			self.price_history.append(self.price)  # Append new price to price history
+			print("New price: " + str(self.price))
+			print(self.price_history)
+		elif index <= 50:
+			print(f"{self.name} invested value: " + str(self.invested_value))
+			self.invested_value += self.invested_value * 0.25
+			print(f"{self.name} increased: " + str(self.invested_value))
+			self.price += self.price * 0.25
+			self.price_history.append(self.price)  # Append new price to price history
+			print("New price: " + str(self.price))
+			print(self.price_history)
+		else:
+			print(f"{self.name} stayed the same")
+			print("New price: " + str(self.price))
+		print(f'''
+        Your investment is now worth: {self.invested_value}
+        The stock price started at: {self.price_history[0]} and is now: {self.price}
+        The increase/decrease in price is: {self.price - self.price_history[0]}
+        ''')
+
+
+stocks = [
+    Stock("Dog", 2, 50),
+	Stock("Cat", 1, 50),
+	Stock("Mouse", 3, 50)
+]
+quarter = 0
+for i in range(10):
+	print(f"Quarter {i + 1}")
+	for stock in stocks:
+		stock.simulate()
+		quarter += 1
+
+
+"""
+class Stock:
+	def __init__(self, price, funds):
+		self.price = price
+		self.funds = funds
+		self.invested_value = funds / price
+		self.price_history = [price]
+
+	def simulate(self):
+		index = random.randint(0, 100)
+
+		if index <= 25:
+			self.invested_value -= self.invested_value * 0.25
+			print("Stock dropped" + str(self.invested_value))
+			appended_price = self.price_history # decreate price and append to price history
+			print(self.price_history)
+			price = appended_price
+		elif index <= 50:
+			self.invested_value += self.invested_value * 0.25
+			print("Stock increased" + str(self.invested_value))
+			appended_price = self.price_history
+			print(self.price_history)
+			price = appended_price
+		else:
+			print("Stock stayed the same")
+
+Stock(2, 10)
+
+for i in range(10):
+	Stock.simulate([0])
+
+
+price = 2
 funds = 10
+new_price = 0
 
 invested_value = funds / price
+print("Invested value: ", invested_value)
 
-index = 15
+
+
+index = random.randint(0, 100)
 
 if index <= 25:
 	invested_value -= invested_value * 0.25
-	print("Stock dropped")
+	print("Stock dropped" + str(invested_value))
 elif index <= 50:
 	invested_value += invested_value * 0.25
-	print("Stock increased")
+	print("Stock increased" + str(invested_value))
+else:
+	print("Stock stayed the same")
+ 
+""" 
 
