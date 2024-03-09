@@ -1,1 +1,14 @@
-test
+price = 1.50
+funds = 10
+
+invested_value = funds / price
+
+index = 15
+
+if index <= 25:
+	invested_value -= invested_value * 0.25
+	print("Stock dropped")
+elif index <= 50:
+	invested_value += invested_value * 0.25
+	print("Stock increased")
+
