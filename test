@@ -5,6 +5,7 @@ class Stock:
 	def __init__(self, name, price, funds):
 		self.name = name
 		self.price = price
+		self.total_funds = 150
 		self.funds = funds
 		self.split_history = []
 		self.invested_value = funds / price
@@ -12,6 +13,14 @@ class Stock:
 		self.price_history = [price]
 		
 	quarter = 0
+	
+	def allocate_funds(self):
+		for stock in stocks:
+			funds = self.funds
+			print("You have £" + str(self.total_funds) + " left to split.")
+			funds = int(input(f"Enter the amount you want to invest in {self.name}: "))
+			self.total_funds -= funds
+
  
 	def update_price(self):  # method
 		
@@ -109,9 +118,11 @@ quarter = 0
 for i in range(12):
 	print(f"Quarter {i + 1}")
 	for stock in stocks:
-		stock.update_price()
 		if quarter % 4 == 0:
+			stock.allocate_funds()
 			stock.update_splits(stocks)
+		stock.update_price()
+		
 		quarter += 1
 
 
