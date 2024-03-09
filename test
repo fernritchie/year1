@@ -8,10 +8,63 @@ class Stock:
 		self.funds = funds
 		self.split_history = []
 		self.invested_value = funds / price
+		self.invested_history = []
 		self.price_history = [price]
 		
 	quarter = 0
-
+ 
+	def update_price(self):  # method
+		
+		self.invested_history.append(self.invested_value)
+		index = random.randint(0, 100)
+		if self.price < 0.10:  # if the price is less than 10 pence
+			print(f"{self.name} is too low to trade")
+		else:
+			if index <= 25:  # 25% chance of a price drop
+				print(f"{self.name} invested value: " + str(self.invested_value))
+				drop_percent = random.randint(25, 75) / 100.0
+				self.price -= self.price * drop_percent
+				self.price -= self.price * 0.125
+				self.invested_value -= self.invested_value * drop_percent
+				self.invested_value -= self.invested_value * 0.125
+				self.price_history.append(self.price)  # Append new price to price history
+				print("New price: " + str(self.price))
+				print(f"{self.name} dropped: " + str(self.invested_value))
+				print(self.price_history)
+				#self.latest_loss = self.price * drop_percent
+				#self.loss_history.append((year + 1, self.latest_loss))
+			elif index <= 50:  # 25% chance of a price increase
+				print(f"{self.name} invested value: " + str(self.invested_value))
+				increase_percent = random.randint(1, 25) / 100.0
+				self.price += self.price * increase_percent
+				self.price -= self.price * 0.125
+				self.invested_value += self.invested_value * increase_percent
+				self.invested_value -= self.invested_value * 0.125
+				print(f"{self.name} increased: " + str(self.invested_value))
+			else:
+				print(f"{self.name} invested value: " + str(self.invested_value))
+				increase_percent = random.randint(15, 35) / 100.0
+				self.price += self.price * increase_percent
+				self.invested_value += self.invested_value * increase_percent
+				print(f"{self.name} increased: " + str(self.invested_value))
+			print(f'''
+        Your investment is now worth: {self.invested_value}
+        The stock price started at: {self.price_history[0]} and is now: {self.price}
+        The increase/decrease in price is: {self.price - self.price_history[0]}
+        The amount invested was {self.invested_history[0]} and is now {self.invested_value}
+        ''')
+			self.price_history.append(self.price)
+   
+	def update_splits(self, stocks):
+		self.split_history.append((self.name, self.price, self.funds, self.invested_value))
+		print(f'''
+		THIS IS TO SIMULATE A YEAR
+		
+		{stocks[0].split_history}
+		{stocks[1].split_history}
+		{stocks[2].split_history}''')
+			
+"""            
 	def simulate(self):
 		index = random.randint(0, 100)
 		
@@ -40,7 +93,7 @@ class Stock:
         The stock price started at: {self.price_history[0]} and is now: {self.price}
         The increase/decrease in price is: {self.price - self.price_history[0]}
         ''')
-
+"""
 
 stocks = [
     Stock("Dog", 2, 50),
@@ -48,10 +101,12 @@ stocks = [
 	Stock("Mouse", 3, 50)
 ]
 quarter = 0
-for i in range(10):
+for i in range(12):
 	print(f"Quarter {i + 1}")
 	for stock in stocks:
-		stock.simulate()
+		stock.update_price()
+		if quarter % 4 == 0:
+			stock.update_splits(stocks)
 		quarter += 1
 
 
