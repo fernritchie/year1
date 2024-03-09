@@ -28,30 +28,35 @@ class Stock:
 				self.invested_value -= self.invested_value * drop_percent
 				self.invested_value -= self.invested_value * 0.125
 				self.price_history.append(self.price)  # Append new price to price history
-				print("New price: " + str(self.price))
-				print(f"{self.name} dropped: " + str(self.invested_value))
-				print(self.price_history)
+				#print("New price: " + str(self.price))
+				#print(f"{self.name} dropped: " + str(self.invested_value))
+				#print(self.price_history)
 				#self.latest_loss = self.price * drop_percent
 				#self.loss_history.append((year + 1, self.latest_loss))
 			elif index <= 50:  # 25% chance of a price increase
-				print(f"{self.name} invested value: " + str(self.invested_value))
+				#print(f"{self.name} invested value: " + str(self.invested_value))
 				increase_percent = random.randint(1, 25) / 100.0
 				self.price += self.price * increase_percent
 				self.price -= self.price * 0.125
 				self.invested_value += self.invested_value * increase_percent
 				self.invested_value -= self.invested_value * 0.125
-				print(f"{self.name} increased: " + str(self.invested_value))
+				#print(f"{self.name} increased: " + str(self.invested_value))
 			else:
-				print(f"{self.name} invested value: " + str(self.invested_value))
+				#print(f"{self.name} invested value: " + str(self.invested_value))
 				increase_percent = random.randint(15, 35) / 100.0
 				self.price += self.price * increase_percent
 				self.invested_value += self.invested_value * increase_percent
-				print(f"{self.name} increased: " + str(self.invested_value))
+				#print(f"{self.name} increased: " + str(self.invested_value))
 			print(f'''
-        Your investment is now worth: {self.invested_value}
-        The stock price started at: {self.price_history[0]} and is now: {self.price}
+        {self.name} has been updated
+        ----------------------------
+        The stock price started at: {self.price_history[0]} and is now: {self.price:.2f}
+        The amount invested was {self.invested_history[0]:.2f} and is now {self.invested_value:.2f}
+        Your investment is now worth: {self.invested_value:.2f}
+        
         The increase/decrease in price is: {self.price - self.price_history[0]}
-        The amount invested was {self.invested_history[0]} and is now {self.invested_value}
+        
+        ----------------------------
         ''')
 			self.price_history.append(self.price)
    
