@@ -10,13 +10,13 @@ class Stock:
         """
         self.name = name
         self.price = price
-        self.history = [price]
+        self.history = [price] # list to store price change
         self.latest_loss = 0
-        self.loss_history = []
-        self.investment_splits = []
-        self.invest = 0
-        self.invest_history = []
-        self.owned = 0
+        self.loss_history = [] # list to store all losses
+        self.investment_splits = [] # stores year and investment
+        self.invest = 0 # stores stock invested value
+        self.invest_history = [] # stores all investment values
+        self.owned = 0 # stores amount of stock owned
 
     def update_splits(self, year, invest):
         """
@@ -131,7 +131,7 @@ while True:
                     invest = float(input(f"Enter the investment amount for {stock.name}: £"))
                     stock.invest_history.append(invest) # Append the investment to the history
                 else:
-                    invest = funds
+                    invest = funds # invests leftover funds
                     stock.invest_history.append(invest) # Append the investment to the history
                     print(f"All remaining funds will be invested in {stock.name}: £{invest:.2f}")
                 print(f"You have invested £{invest:.2f} in {stock.name}")
