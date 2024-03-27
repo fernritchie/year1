@@ -13,15 +13,37 @@ class Stock:
 		self.price_history = [price]
 		
 	quarter = 0
-	
+ 
 	def allocate_funds(self):
+		print("You have £" + str(self.total_funds) + " left to split.")
+		while True:
+			try:
+				funds = int(input(f"Enter the amount you want to invest in {self.name}: "))
+				self.total_funds -= funds
+				self.funds = funds
+				self.split_history.append((self.name, self.price, self.funds, self.invested_value))
+				print(f"{self.name} : {self.split_history}")
+				break
+			except ValueError:
+				print("Invalid input. Please enter a number.")
+		
+  
+	"""def allocate_funds(self, stocks):
 		for stock in stocks:
 			funds = self.funds
 			print("You have £" + str(self.total_funds) + " left to split.")
-			funds = int(input(f"Enter the amount you want to invest in {self.name}: "))
+			while True:
+				try:
+					funds = int(input(f"Enter the amount you want to invest in {stock.name}: "))
+					break
+				except ValueError:
+					print("Invalid input. Please enter a number.")
 			self.total_funds -= funds
+			stock.funds = funds
+			self.update_splits(stocks)
+			print(f"{self.name} : {self.split_history}")"""
 
- 
+	# calculations
 	def update_price(self):  # method
 		
 		self.invested_history.append(self.invested_value)
@@ -69,6 +91,8 @@ class Stock:
         ''')
 			self.price_history.append(self.price)
    
+"""
+   # update splits and print split history
 	def update_splits(self, stocks):
 		self.split_history.append((self.name, self.price, self.funds, self.invested_value))
 		print(f'''
@@ -77,7 +101,7 @@ class Stock:
 		{stocks[0].split_history}
 		{stocks[1].split_history}
 		{stocks[2].split_history}''')
-			
+"""		
 """            
 	def simulate(self):
 		index = random.randint(0, 100)
@@ -114,13 +138,15 @@ stocks = [
 	Stock("Cat", 1, 50),
 	Stock("Mouse", 3, 50)
 ]
+
 quarter = 0
 for i in range(12):
 	print(f"Quarter {i + 1}")
 	for stock in stocks:
 		if quarter % 4 == 0:
-			stock.allocate_funds()
-			stock.update_splits(stocks)
+			for stock in stocks:
+				stock.allocate_funds()
+			#stock.update_splits(stocks)
 		stock.update_price()
 		
 		quarter += 1
