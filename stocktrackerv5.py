@@ -134,6 +134,12 @@ def plot_price_history(stocks):
 
 
 def withdraw_funds():
+    """
+    Gives the user the option to withdraw funds and shows portfolio summary/graphs
+    """
+    initial_investment = 150  # Initial funds
+    final_funds = funds  # Final funds
+    total_investment = initial_investment - final_funds  # Total investment made
     withdraw_funds = input(f"Would you like to withdraw funds (£{funds:.2f})? (yes/no): ")
     if withdraw_funds.lower() == "yes":
         print(f"Thank you for playing. You have withdrawn £{funds:.2f}")
@@ -150,7 +156,8 @@ def withdraw_funds():
 
         print("End of portfolio summary.")
 
-        print(f"You have made a gain/loss of £{funds - total_invested:.2f}")
+        print(f"You have made a gain/loss of £{total_investment:.2f}")  # Calculate gain/loss using total investment
+        print(f"In total you invested £{total_investment:.2f}")
 
         # Plot the price history of each stock
         plot_price_history(stocks)
@@ -159,6 +166,7 @@ def withdraw_funds():
         raise SystemExit
     else:
         pass
+
 
 
 # Main loop for the program
@@ -191,7 +199,17 @@ while True:
                 If it's the first two stocks, ask the user for the investment amount.
                 """
                 if i < 2:
-                    invest = float(input(f"Enter the investment amount for {stock.name}: £"))
+                    while True:
+                        try:
+                            invest = float(input(f"Enter the investment amount for {stock.name}: £"))
+                            if invest < 0:
+                                raise ValueError("Invalid amount. Please enter a positive number.")
+                            if invest > funds:
+                                raise ValueError(f"Insufficient funds. You have only £{funds:.2f} left.")
+                            
+                            break  # Break out of the inner loop if input is valid
+                        except ValueError:
+                            print("Invalid input. Please enter a number.")
                     stock.invest_history.append(invest)  # Append the investment to the history
                 else:
                     invest = funds
@@ -242,7 +260,7 @@ Your investment in {stock.name} is now worth £{stock.invest:.2f}
 
             stock_prices[stock.name].append(stock.price)
 
-            funds = sum(stock.invest for stock in stocks)
+            funds = sum(stock.invest for stock in stocks) # Funds are the sum of all stock investment values
 
         # Increment the quarter
         quarter += 1
